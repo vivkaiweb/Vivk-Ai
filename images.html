@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>Vivk AI - توليد الصور</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Vivk AI</h1>
+  <nav>
+    <a href="index.html">الرئيسية</a>
+    <a href="images.html">توليد الصور</a>
+    <a href="faq.html">التعليمات</a>
+    <a href="about.html">حول Vivk AI</a>
+  </nav>
+</header>
+<main>
+  <h2>توليد الصور</h2>
+  <p>اكتب وصف الصورة في نافذة Vivk AI العائمة لإنشاء صورة مباشرة!</p>
+</main>
+<footer>
+  &copy; 2025 Vivk AI
+</footer>
+
+<div id="floatingAI" style="height:50px;">
+  <div id="floatingHeader">💬 Vivk AI</div>
+  <div id="floatingContent">
+    <div id="floatingChat"></div>
+    <div id="floatingInputArea">
+      <input type="text" id="floatingInput" placeholder="اكتب وصف الصورة هنا...">
+      <button onclick="sendFloatingMessage()">أرسل</button>
+      <button onclick="generateFloatingImage()">🖼️ صورة</button>
+    </div>
+    <div id="imageResult"></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
