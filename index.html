@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vivk AI - منصة الذكاء الاصطناعي المتطورة</title>
+    <title>Vivk AI - منصة الذكاء الاصطناعي المتكاملة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/framer-motion@10.16.0/dist/framer-motion.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -24,18 +25,10 @@
                             800: '#075985',
                             900: '#0c4a6e',
                         },
-                        vivk: {
-                            blue: '#2563eb',
-                            purple: '#7c3aed',
-                            teal: '#0d9488',
-                            pink: '#db2777'
-                        }
                     },
                     animation: {
                         'fade-in': 'fadeIn 0.5s ease-in-out',
                         'slide-up': 'slideUp 0.5s ease-out',
-                        'pulse-slow': 'pulse 3s infinite',
-                        'float': 'float 6s ease-in-out infinite',
                     },
                     keyframes: {
                         fadeIn: {
@@ -46,10 +39,6 @@
                             '0%': { transform: 'translateY(10px)', opacity: '0' },
                             '100%': { transform: 'translateY(0)', opacity: '1' },
                         },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        }
                     },
                 },
             },
@@ -58,38 +47,18 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
         
-        * {
+        body {
             font-family: 'Tajawal', sans-serif;
             transition: all 0.3s ease;
-        }
-        
-        body {
-            background-color: #f9fafb;
-            color: #1f2937;
-        }
-        
-        .dark body {
-            background-color: #111827;
-            color: #f3f4f6;
         }
         
         .gradient-bg {
             background: linear-gradient(135deg, #0ea5e9 0%, #7e22ce 100%);
         }
         
-        .vivk-gradient {
-            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-        }
-        
-        .vivk-gradient-text {
-            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
         .chat-message-user {
             border-radius: 20px 20px 0 20px;
-            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            background-color: #0ea5e9;
             color: white;
         }
         
@@ -100,7 +69,7 @@
         }
         
         .dark .chat-message-ai {
-            background-color: #1f2937;
+            background-color: #374151;
             color: #f9fafb;
         }
         
@@ -146,43 +115,16 @@
         
         .feature-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
         }
         
         .dark .feature-card:hover {
-            box-shadow: 0 20px 25px -5px rgba(255, 255, 255, 0.1), 0 10px 10px -5px rgba(255, 255, 255, 0.04);
+            box-shadow: 0 10px 25px -5px rgba(255, 255, 255, 0.1);
         }
         
         .code-block {
             font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
             font-size: 0.9em;
-        }
-        
-        .glow {
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-        }
-        
-        .dark .glow {
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
-        }
-        
-        .neural-network-bg {
-            background-image: 
-                radial-gradient(circle at 25% 25%, rgba(37, 99, 235, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgba(124, 58, 237, 0.2) 0%, transparent 50%);
-        }
-        
-        .particles-container {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-            opacity: 0.3;
-            animation: float 10s infinite ease-in-out;
         }
         
         /* تحسينات للوضع المظلم */
@@ -201,63 +143,26 @@
                 grid-template-columns: 1fr;
             }
         }
-        
-        /* تخصيص شريط التمرير */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        
-        .dark ::-webkit-scrollbar-track {
-            background: #374151;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #1d4ed8 0%, #6d28d9 100%);
-        }
     </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-    <!-- تأثير الجسيمات المتحركة -->
-    <div class="particles-container fixed inset-0 pointer-events-none z-0">
-        <div class="particle w-4 h-4" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
-        <div class="particle w-6 h-6" style="top: 60%; left: 80%; animation-delay: 2s;"></div>
-        <div class="particle w-3 h-3" style="top: 80%; left: 30%; animation-delay: 4s;"></div>
-        <div class="particle w-5 h-5" style="top: 40%; left: 50%; animation-delay: 6s;"></div>
-        <div class="particle w-7 h-7" style="top: 10%; left: 70%; animation-delay: 8s;"></div>
-    </div>
-
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
     <!-- شريط التنقل -->
     <nav class="fixed w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md z-50 py-4 px-6 shadow-sm">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-2 rtl:space-x-reverse">
-                <!-- شعار Vivk AI -->
-                <div class="w-10 h-10 rounded-full vivk-gradient flex items-center justify-center text-white font-bold text-xl relative glow">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-6 h-6">
-                        <path d="M50 15 L75 50 L50 85 L25 50 Z" fill="white" />
-                        <circle cx="50" cy="50" r="10" fill="#7c3aed" />
-                    </svg>
-                </div>
-                <span class="text-xl font-bold bg-gradient-to-r from-vivk-blue to-vivk-purple bg-clip-text text-transparent">Vivk AI</span>
+                <div class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center text-white font-bold text-xl">V</div>
+                <span class="text-xl font-bold">Vivk AI</span>
             </div>
             
             <div class="flex items-center space-x-6 rtl:space-x-reverse">
-                <a href="#features" class="hover:text-vivk-blue transition-colors hidden md:block">الميزات</a>
-                <a href="#chat" class="hover:text-vivk-blue transition-colors hidden md:block">المحادثة</a>
-                <a href="#api" class="hover:text-vivk-blue transition-colors hidden md:block">API</a>
+                <a href="#features" class="hover:text-primary-500 transition-colors hidden md:block">الميزات</a>
+                <a href="#chat" class="hover:text-primary-500 transition-colors hidden md:block">المحادثة</a>
+                <a href="#api" class="hover:text-primary-500 transition-colors hidden md:block">API</a>
                 
                 <div class="flex items-center space-x-4 rtl:space-x-reverse">
                     <!-- تبديل اللغة -->
                     <div class="flex items-center space-x-2 rtl:space-x-reverse bg-gray-100 dark:bg-gray-800 rounded-full p-1">
-                        <button class="language-selector w-8 h-8 rounded-full bg-vivk-blue text-white flex items-center justify-center" title="العربية">
+                        <button class="language-selector w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center" title="العربية">
                             <span>AR</span>
                         </button>
                         <button class="language-selector w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center" title="English">
@@ -270,13 +175,13 @@
                     
                     <!-- تبديل الوضع الداكن -->
                     <button id="theme-toggle" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800">
-                        <i class="fas fa-moon dark:hidden text-vivk-purple"></i>
-                        <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
                     </button>
 
                     <!-- زر القائمة للموبايل -->
                     <button id="mobile-menu-button" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 md:hidden">
-                        <i class="fas fa-bars text-vivk-blue"></i>
+                        <i class="fas fa-bars"></i>
                     </button>
                 </div>
             </div>
@@ -284,39 +189,32 @@
 
         <!-- قائمة الموبايل -->
         <div id="mobile-menu" class="hidden mt-4 md:hidden bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4">
-            <a href="#features" class="block py-2 hover:text-vivk-blue transition-colors">الميزات</a>
-            <a href="#chat" class="block py-2 hover:text-vivk-blue transition-colors">المحادثة</a>
-            <a href="#api" class="block py-2 hover:text-vivk-blue transition-colors">API</a>
+            <a href="#features" class="block py-2 hover:text-primary-500 transition-colors">الميزات</a>
+            <a href="#chat" class="block py-2 hover:text-primary-500 transition-colors">المحادثة</a>
+            <a href="#api" class="block py-2 hover:text-primary-500 transition-colors">API</a>
         </div>
     </nav>
 
     <!-- القسم الرئيسي -->
-    <header class="pt-32 pb-20 px-6 neural-network-bg relative overflow-hidden">
-        <div class="max-w-7xl mx-auto text-center relative z-10">
-            <h1 class="hero-title text-4xl md:text-6xl font-bold mb-6 animate-fade-in">منصة ذكاء اصطناعي <span class="vivk-gradient-text">تتفوق على DeepSeek</span></h1>
+    <header class="pt-32 pb-20 px-6 gradient-bg text-white">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="hero-title text-4xl md:text-6xl font-bold mb-6 animate-fade-in">منصة ذكاء اصطناعي <span class="text-yellow-300">تتفوق على DeepSeek</span></h1>
             <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto animate-slide-up">اكتشف قوة الذكاء الاصطناعي المتقدم مع Vivk AI. سرعة فائقة، دقة غير مسبوقة، وخصوصية تامة.</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 rtl:sm:space-x-reverse animate-slide-up">
-                <button class="bg-white text-vivk-blue px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition-colors shadow-lg glow">جرب الآن</button>
+                <button class="bg-white text-primary-700 px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition-colors shadow-lg">جرب الآن</button>
                 <button class="border-2 border-white text-white px-8 py-3 rounded-full font-bold hover:bg-white/10 transition-colors">المزيد من المعلومات</button>
             </div>
-        </div>
-        
-        <!-- موجات متحركة في الخلفية -->
-        <div class="absolute bottom-0 left-0 w-full overflow-hidden">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="w-full h-16">
-                <path d="M0 0V46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.8-37.5 73.84-4.36 147.54 16.88 218.2 35.26 69.27 18 138.3 24.88 209.4 13.08 36.15-6 69.85-17.84 104.45-29.34C989.49 25 1113-14.29 1200 52.47V0Z" fill="rgba(255,255,255,0.1)" class="shape-fill"></path>
-            </svg>
         </div>
     </header>
 
     <!-- قسم الميزات -->
-    <section id="features" class="py-20 px-6 bg-white dark:bg-gray-800">
+    <section id="features" class="py-20 px-6 bg-gray-50 dark:bg-gray-800">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">لماذا تختار <span class="vivk-gradient-text">Vivk AI</span>؟</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">لماذا تختار <span class="text-primary-600">Vivk AI</span>؟</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 feature-grid">
                 <!-- ميزة السرعة -->
-                <div class="feature-card bg-gray-50 dark:bg-gray-900 p-6 rounded-xl shadow-md">
+                <div class="feature-card bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md">
                     <div class="w-14 h-14 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-500 mb-4">
                         <i class="fas fa-bolt text-2xl"></i>
                     </div>
@@ -325,7 +223,7 @@
                 </div>
                 
                 <!-- ميزة الدقة -->
-                <div class="feature-card bg-gray-50 dark:bg-gray-900 p-6 rounded-xl shadow-md">
+                <div class="feature-card bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md">
                     <div class="w-14 h-14 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-500 mb-4">
                         <i class="fas fa-bullseye text-2xl"></i>
                     </div>
@@ -334,7 +232,7 @@
                 </div>
                 
                 <!-- ميزة السهولة -->
-                <div class="feature-card bg-gray-50 dark:bg-gray-900 p-6 rounded-xl shadow-md">
+                <div class="feature-card bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md">
                     <div class="w-14 h-14 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-500 mb-4">
                         <i class="fas fa-user-check text-2xl"></i>
                     </div>
@@ -343,7 +241,7 @@
                 </div>
                 
                 <!-- ميزة الخصوصية -->
-                <div class="feature-card bg-gray-50 dark:bg-gray-900 p-6 rounded-xl shadow-md">
+                <div class="feature-card bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md">
                     <div class="w-14 h-14 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-red-500 mb-4">
                         <i class="fas fa-shield-alt text-2xl"></i>
                     </div>
@@ -355,14 +253,14 @@
     </section>
 
     <!-- قسم المحادثة -->
-    <section id="chat" class="py-20 px-6 bg-gray-50 dark:bg-gray-900">
+    <section id="chat" class="py-20 px-6 bg-white dark:bg-gray-900">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-6">تجربة محادثة ذكية</h2>
             <p class="text-center text-gray-600 dark:text-gray-400 mb-12">تفاعل مع نموذج الذكاء الاصطناعي المتقدم الخاص بنا</p>
             
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+            <div class="bg-gray-100 dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
                 <!-- رأس واجهة المحادثة -->
-                <div class="vivk-gradient text-white p-4 flex items-center">
+                <div class="bg-primary-600 text-white p-4 flex items-center">
                     <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mr-3">
                         <i class="fas fa-robot"></i>
                     </div>
@@ -373,25 +271,59 @@
                 </div>
                 
                 <!-- منطقة المحادثة -->
-                <div class="h-96 overflow-y-auto p-4 space-y-4" id="chat-messages">
-                    <!-- سيتم إضافة الرسائل هنا ديناميكيًا -->
+                <div class="h-96 overflow-y-auto p-4 space-y-4">
+                    <!-- رسالة من الذكاء الاصطناعي -->
+                    <div class="flex items-start space-x-3 rtl:space-x-reverse">
+                        <div class="w-8 h-8 rounded-full gradient-bg flex items-center justify-center text-white flex-shrink-0">
+                            <i class="fas fa-robot text-sm"></i>
+                        </div>
+                        <div class="chat-message-ai p-4 max-w-md">
+                            <p>مرحباً! أنا مساعد Vivk AI. كيف يمكنني مساعدتك اليوم؟</p>
+                        </div>
+                    </div>
+                    
+                    <!-- رسالة من المستخدم -->
+                    <div class="flex items-start space-x-3 rtl:space-x-reverse flex-row-reverse">
+                        <div class="w-8 h-8 rounded-full gradient-bg flex items-center justify-center text-white flex-shrink-0">
+                            <i class="fas fa-user text-sm"></i>
+                        </div>
+                        <div class="chat-message-user p-4 max-w-md">
+                            <p>أحتاج مساعدة في كتابة رسالة بريد إلكتروني لعميل</p>
+                        </div>
+                    </div>
+                    
+                    <!-- رسالة من الذكاء الاصطناعي -->
+                    <div class="flex items-start space-x-3 rtl:space-x-reverse">
+                        <div class="w-8 h-8 rounded-full gradient-bg flex items-center justify-center text-white flex-shrink-0">
+                            <i class="fas fa-robot text-sm"></i>
+                        </div>
+                        <div class="chat-message-ai p-4 max-w-md">
+                            <p>بالطبع! يمكنني مساعدتك في ذلك. ما هو نوع الرسالة التي تريد كتابتها؟ هل هي رسالة متابعة، شكر، أو تقديم خدمة جديدة؟</p>
+                        </div>
+                    </div>
+                    
+                    <!-- مؤشر الكتابة -->
+                    <div class="flex items-start space-x-3 rtl:space-x-reverse">
+                        <div class="w-8 h-8 rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center text-gray-600 flex-shrink-0">
+                            <i class="fas fa-robot text-sm"></i>
+                        </div>
+                        <div class="bg-gray-200 dark:bg-gray-700 p-4 rounded-r-2xl rounded-tl-2xl">
+                            <div class="typing-animation">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- صندوق الإدخال -->
                 <div class="p-4 border-t border-gray-200 dark:border-gray-700">
                     <div class="flex space-x-2 rtl:space-x-reverse">
-                        <input 
-                            type="text" 
-                            id="user-input"
-                            placeholder="اكتب رسالتك هنا..." 
-                            class="flex-1 p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-vivk-blue"
-                        >
-                        <button id="send-button" class="p-3 vivk-gradient text-white rounded-lg hover:opacity-90 transition-opacity">
+                        <input type="text" placeholder="اكتب رسالتك هنا..." class="flex-1 p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        <button class="p-3 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors">
                             <i class="fas fa-paper-plane"></i>
                         </button>
-                    </div>
-                    <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                        اضغط على Enter للإرسال • Vivk AI يمكنه فهم الأسئلة المعقدة والرد عليها بذكاء
                     </div>
                 </div>
             </div>
@@ -399,7 +331,7 @@
     </section>
 
     <!-- قسم API -->
-    <section id="api" class="py-20 px-6 bg-white dark:bg-gray-800">
+    <section id="api" class="py-20 px-6 bg-gray-50 dark:bg-gray-800">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-6">API للمطورين</h2>
             <p class="text-center text-gray-600 dark:text-gray-400 mb-12">ادمج قوة Vivk AI في تطبيقاتك بسهولة</p>
@@ -429,8 +361,8 @@
                     </div>
                     
                     <div class="flex space-x-4 rtl:space-x-reverse">
-                        <button class="vivk-gradient text-white px-6 py-2 rounded-lg hover:opacity-90 transition-opacity">التوثيق الكامل</button>
-                        <button class="border border-vivk-blue text-vivk-blue px-6 py-2 rounded-lg hover:bg-vivk-blue hover:text-white transition-colors">احصل على API Key</button>
+                        <button class="bg-primary-500 text-white px-6 py-2 rounded-lg hover:bg-primary-600 transition-colors">التوثيق الكامل</button>
+                        <button class="border border-primary-500 text-primary-500 px-6 py-2 rounded-lg hover:bg-primary-50 dark:hover:bg-gray-700 transition-colors">احصل على API Key</button>
                     </div>
                 </div>
                 
@@ -439,7 +371,7 @@
                     
                     <div class="space-y-6">
                         <div class="flex items-start space-x-4 rtl:space-x-reverse">
-                            <div class="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-500 flex-shrink-0">
+                            <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center text-primary-500 flex-shrink-0">
                                 <i class="fas fa-code"></i>
                             </div>
                             <div>
@@ -479,7 +411,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
                     <div class="flex items-center space-x-2 rtl:space-x-reverse mb-4">
-                        <div class="w-10 h-10 rounded-full vivk-gradient flex items-center justify-center text-white font-bold text-xl">V</div>
+                        <div class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center text-white font-bold text-xl">V</div>
                         <span class="text-xl font-bold">Vivk AI</span>
                     </div>
                     <p class="text-gray-400">منصة الذكاء الاصطناعي المتكاملة التي تتفوق على المنافسين في السرعة والدقة.</p>
@@ -530,235 +462,70 @@
         </div>
     </footer>
 
-    <!-- الذكاء الاصطناعي المدمج -->
     <script>
-        // بيانات الذكاء الاصطناعي
-        const aiKnowledge = {
-            greetings: ["مرحباً! كيف يمكنني مساعدتك اليوم؟", "أهلاً وسهلاً! أنا هنا لمساعدتك.", "مرحباً بك! أنا مساعد Vivk AI."],
-            responses: {
-                "كيف حالك": ["أنا بخير، شكراً لسؤالك! كيف يمكنني مساعدتك؟", "أنا أعمل بشكل رائع! كيف يمكنني مساعدتك اليوم؟"],
-                "ما هو اسمك": ["أنا مساعد Vivk AI، في خدمتك!", "اسمي Vivk AI، وأنا هنا لمساعدتك في أي شيء تحتاجه."],
-                "ماذا يمكنك أن تفعل": [
-                    "يمكنني مساعدتك في العديد من المهام مثل:\n- الإجابة على الأسئلة\n- كتابة المحتوى\n- تحليل البيانات\n- البرمجة\n- والكثير أكثر! فقط أخبرني بما تحتاجه.",
-                    "أستطيع مساعدتك في:\n- الإجابة على استفساراتك\n- توليد الأفكار والمحتوى\n- حل المشكلات\n- شرح المفاهيم\n- وكل ما تحتاجه من ذكاء اصطناعي!"
-                ],
-                "ما هو الذكاء الاصطناعي": [
-                    "الذكاء الاصطناعي (AI) هو محاكاة عمليات الذكاء البشري بواسطة الآلات وخاصة أنظمة الكمبيوتر. التطبيقات الخاصة تتضمن أنظمة الخبراء ومعالجة اللغات الطبيعية والتعرف على الكلام والرؤية الآلية.",
-                    "الذكاء الاصطناعي هو مجال من مجالات علوم الكمبيوتر مخصص لحل المشكلات المعرفية المرتبطة بالذكاء البشري مثل التعلم وحل المشكلات والتمييز الأنماط. يشمل التعلم الآلي والتعلم العميق والشبكات العصبية."
-                ],
-                "كيف يعمل Vivk AI": [
-                    "يعمل Vivk AI باستخدام أحدث تقنيات الذكاء الاصطناعي مثل نماذج اللغة الكبيرة (LLMs) والشبكات العصبية. يتم تدريبي على كميات هائلة من البيانات لفهم اللغة والسياق وتقديم إجابات دقيقة وذكية.",
-                    "Vivk AI مبني على بنية متقدمة للذكاء الاصطناعي تجمع بين تقنيات معالجة اللغة الطبيعية (NLP) والتعلم العميق. هذا يسمح لي بفهم الأسئلة المعقدة وتقديم إجابات مفيدة ودقيقة."
-                ],
-                "ما الفرق بينك وبين ChatGPT": [
-                    "أنا Vivk AI مصمم خصيصًا للغة العربية وفهم الثقافة العربية بشكل أعمق. لدي تحسينات في فهم السياق المحلي والتعامل مع اللهجات المختلفة. بالإضافة إلى ذلك، أركز على الخصوصية وسرعة الاستجابة وجودة الإجابات باللغة العربية.",
-                    "بينما ChatGPT أداة رائعة، أنا Vivk AI أركز على توفير تجربة أفضل للمستخدمين الناطقين بالعربية. لدي قدرات متقدمة في معالجة اللغة العربية وفهم السياق الثقافي العربي، مع الحفاظ على أعلى معايير الخصوصية والأمان."
-                ],
-                "كيف يمكنني استخدامك في مشروعي": [
-                    "يمكنك استخدامي في مشروعك بعدة طرق:\n1- من خلال واجهة المحادثة المباشرة\n2- باستخدام API للدمج في تطبيقاتك\n3- لتحليل البيانات وتوليد التقارير\n4- لإنشاء محتوى ذكي بلغات متعددة\n5- للترجمة وتحليل المشاعر\nما هو نوع المشروع الذي تعمل عليه؟"
-                ]
-            },
-            default: [
-                "هذا سؤال مثير للاهتمام! يمكنني مساعدتك في ذلك. هل يمكنك تقديم المزيد من التفاصيل؟",
-                "أفهم استفسارك. دعني أفكر في أفضل طريقة للإجابة على هذا السؤال...",
-                "شكراً لسؤالك. بناءً على معرفتي، يمكنني تقديم هذه المعلومات:",
-                "هذا موضوع رائع! لدي بعض الأفكار حول هذا:"
-            ]
-        };
-
-        // وظائف الذكاء الاصطناعي
-        const vivkAI = {
-            processInput: function(input) {
-                input = input.toLowerCase().trim();
+        // تبديل الوضع الداكن
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        // التحقق من التفضيلات المحفوظة
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
+        
+        // تبديل اللغة
+        const languageButtons = document.querySelectorAll('.language-selector');
+        languageButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                languageButtons.forEach(btn => btn.classList.remove('bg-primary-500', 'text-white'));
+                languageButtons.forEach(btn => btn.classList.add('bg-gray-200', 'dark:bg-gray-700'));
                 
-                // التحقق من التحيات
-                if (input.includes("مرحبا") || input.includes("اهلا") || input.includes("اهلين") || input.includes("السلام")) {
-                    return this.getRandomResponse(aiKnowledge.greetings);
-                }
+                button.classList.remove('bg-gray-200', 'dark:bg-gray-700');
+                button.classList.add('bg-primary-500', 'text-white');
                 
-                // البحث عن رد مخصص
-                for (const [key, responses] of Object.entries(aiKnowledge.responses)) {
-                    if (input.includes(key)) {
-                        return this.getRandomResponse(responses);
-                    }
-                }
-                
-                // الافتراضي
-                return this.generateSmartResponse(input);
-            },
-            
-            getRandomResponse: function(responses) {
-                return responses[Math.floor(Math.random() * responses.length)];
-            },
-            
-            generateSmartResponse: function(input) {
-                // محاكاة التفكير
-                const thinkingPhrases = [
-                    "دعني أفكر في هذا...",
-                    "هذا سؤال جيد...",
-                    "أبحث في معرفتي عن أفضل إجابة...",
-                    "لدي بعض الأفكار حول هذا..."
-                ];
-                
-                const thinking = this.getRandomResponse(thinkingPhrases);
-                const response = this.getRandomResponse(aiKnowledge.default);
-                
-                return `${thinking}\n\n${response}\n\nهل تريد معرفة المزيد عن هذا الموضوع؟`;
-            },
-            
-            simulateTyping: function(callback) {
-                const messageContainer = document.getElementById('chat-messages');
-                const typingIndicator = document.createElement('div');
-                typingIndicator.className = 'flex items-start space-x-3 rtl:space-x-reverse';
-                typingIndicator.innerHTML = `
-                    <div class="w-8 h-8 rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center text-gray-600 flex-shrink-0">
-                        <i class="fas fa-robot text-sm"></i>
-                    </div>
-                    <div class="bg-gray-200 dark:bg-gray-700 p-4 rounded-r-2xl rounded-tl-2xl">
-                        <div class="typing-animation">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div>
-                `;
-                
-                messageContainer.appendChild(typingIndicator);
-                messageContainer.scrollTop = messageContainer.scrollHeight;
-                
-                // محاكاة وقت الكتابة
-                setTimeout(() => {
-                    messageContainer.removeChild(typingIndicator);
-                    callback();
-                }, 1500);
-            }
-        };
-
-        // إدارة الدردشة
-        const chatManager = {
-            addMessage: function(text, isUser = false) {
-                const messageContainer = document.getElementById('chat-messages');
-                const messageDiv = document.createElement('div');
-                
-                messageDiv.className = `flex items-start space-x-3 rtl:space-x-reverse ${isUser ? 'flex-row-reverse space-x-reverse' : ''}`;
-                
-                // معالجة النص لتحويل الأسطر إلى فقرات
-                const formattedText = text.replace(/\n/g, '<br>');
-                
-                messageDiv.innerHTML = `
-                    <div class="w-8 h-8 rounded-full ${isUser ? 'vivk-gradient' : 'bg-gray-300 dark:bg-gray-700'} flex items-center justify-center text-white flex-shrink-0">
-                        <i class="fas ${isUser ? 'fa-user' : 'fa-robot'} text-sm"></i>
-                    </div>
-                    <div class="${isUser ? 'chat-message-user' : 'chat-message-ai'} p-4 max-w-md">
-                        ${formattedText}
-                    </div>
-                `;
-                
-                messageContainer.appendChild(messageDiv);
-                messageContainer.scrollTop = messageContainer.scrollHeight;
-            },
-            
-            handleUserInput: function() {
-                const inputField = document.getElementById('user-input');
-                const userText = inputField.value.trim();
-                
-                if (userText === '') return;
-                
-                // إضافة رسالة المستخدم
-                this.addMessage(userText, true);
-                inputField.value = '';
-                
-                // محاكاة الكتابة ثم إضافة رد الذكاء الاصطناعي
-                vivkAI.simulateTyping(() => {
-                    const aiResponse = vivkAI.processInput(userText);
-                    this.addMessage(aiResponse, false);
-                });
-            }
-        };
-
-        // تهيئة الصفحة
-        document.addEventListener('DOMContentLoaded', function() {
-            // إضافة رسالة ترحيبية
-            setTimeout(() => {
-                chatManager.addMessage("مرحباً! أنا مساعد Vivk AI. كيف يمكنني مساعدتك اليوم؟", false);
-            }, 500);
-            
-            // أحداث الأزرار
-            document.getElementById('send-button').addEventListener('click', () => {
-                chatManager.handleUserInput();
+                // هنا يمكنك إضافة منطق تغيير اللغة
             });
-            
-            document.getElementById('user-input').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    chatManager.handleUserInput();
+        });
+        
+        // قائمة الموبايل
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // إغلاق القائمة عند النقر على رابط
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // تأثيرات التمرير
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
                 }
             });
-            
-            // تبديل الوضع الداكن
-            const themeToggle = document.getElementById('theme-toggle');
-            const html = document.documentElement;
-            
-            // التحقق من التفضيلات المحفوظة
-            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                html.classList.add('dark');
-            } else {
-                html.classList.remove('dark');
-            }
-            
-            themeToggle.addEventListener('click', () => {
-                html.classList.toggle('dark');
-                localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
-            });
-            
-            // تبديل اللغة
-            const languageButtons = document.querySelectorAll('.language-selector');
-            languageButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    languageButtons.forEach(btn => btn.classList.remove('bg-vivk-blue', 'text-white'));
-                    languageButtons.forEach(btn => btn.classList.add('bg-gray-200', 'dark:bg-gray-700'));
-                    
-                    button.classList.remove('bg-gray-200', 'dark:bg-gray-700');
-                    button.classList.add('bg-vivk-blue', 'text-white');
-                    
-                    // هنا يمكنك إضافة منطق تغيير اللغة
-                    alert("تغيير اللغة سيتم تطبيقه في الإصدارات القادمة!");
-                });
-            });
-            
-            // قائمة الموبايل
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-            
-            // إغلاق القائمة عند النقر على رابط
-            const mobileLinks = mobileMenu.querySelectorAll('a');
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                });
-            });
-            
-            // تأثيرات التمرير
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate-fade-in');
-                    }
-                });
-            }, observerOptions);
-            
-            document.querySelectorAll('section').forEach(section => {
-                observer.observe(section);
-            });
+        }, observerOptions);
+        
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
         });
     </script>
 </body>
