@@ -1,270 +1,152 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Vivk AI — نسخة مجانية متطورة</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <style>
-    :root{--bg:#0b1220;--card:#0f1724;--accent:#7c3aed}
-    .vivk-gradient{background:linear-gradient(135deg,#2563eb 0%,#7c3aed 100%)}
-    body{font-family: Tajawal, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:linear-gradient(180deg,#071123 0%,#071827 60%); color:#e6eef8}
-    /* layout */
-    .app{min-height:100vh;display:grid;grid-template-columns:360px 1fr;gap:24px;padding:28px}
-    @media (max-width:900px){.app{grid-template-columns:1fr;padding:12px}.sidebar{position:fixed;left:12px;top:12px;z-index:60}}
-    .sidebar{background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.02));padding:18px;border-radius:14px;backdrop-filter:blur(6px)}
-    .main{display:flex;flex-direction:column;gap:18px}
-    .chat-window{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:14px;padding:14px;height:70vh;overflow:auto}
-    .controls{display:flex;gap:10px;align-items:center}
-    .input-area{display:flex;gap:8px}
-    .bubble{max-width:78%;padding:10px 14px;border-radius:12px;margin:8px 0;white-space:pre-wrap}
-    .user{margin-left:auto;background:linear-gradient(90deg,#2563eb,#7c3aed);color:white;border-radius:14px 14px 4px 14px}
-    .ai{background:rgba(255,255,255,0.04);color:#dfe9f6;border-radius:14px 14px 14px 4px}
-    .small{font-size:12px;opacity:0.8}
-    .suggestions{position:relative}
-    .sug-list{position:absolute;bottom:52px;left:0;right:0;background:#081126;border-radius:10px;padding:6px;box-shadow:0 8px 30px rgba(0,0,0,0.5);z-index:80}
-    .sug-item{padding:8px;border-radius:8px;cursor:pointer}
-    .sug-item:hover{background:rgba(255,255,255,0.02)}
-    .badge{background:linear-gradient(90deg,#06b6d4,#7c3aed);padding:6px 10px;border-radius:999px;font-weight:600}
-    /* particles */
-    .hero{display:flex;align-items:center;justify-content:space-between;padding:18px;border-radius:12px}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>موقعي الذكي</title>
+<style>
+  /* ====== RESET ====== */
+  * {margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+  body {background: #f5f5f5; color:#333;}
+  a {text-decoration:none; color: inherit;}
+
+  /* ====== NAVBAR ====== */
+  nav {background:#4a90e2; padding:15px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;}
+  nav h1 {color:white; font-size:1.5rem;}
+  nav ul {display:flex; gap:20px; list-style:none;}
+  nav ul li a {color:white; font-weight:bold; transition:0.3s;}
+  nav ul li a:hover {opacity:0.7;}
+
+  /* ====== HEADER ====== */
+  header {padding:50px 20px; text-align:center; background:linear-gradient(to right, #4a90e2, #50e3c2); color:white;}
+  header h2 {font-size:2.5rem; margin-bottom:15px;}
+  header p {font-size:1.2rem;}
+
+  /* ====== SECTION ====== */
+  section {padding:40px 20px; max-width:1000px; margin:auto;}
+  section h3 {font-size:2rem; margin-bottom:20px; color:#4a90e2;}
+  section p {margin-bottom:15px; line-height:1.6;}
+
+  /* ====== CHATBOT ====== */
+  #chatContainer {background:white; padding:20px; border-radius:15px; box-shadow:0 4px 15px rgba(0,0,0,0.1);}
+  #messages {height:300px; overflow-y:auto; border:1px solid #ddd; padding:10px; border-radius:10px; margin-bottom:15px;}
+  .msg {margin-bottom:10px; padding:8px 12px; border-radius:12px; max-width:80%; }
+  .user {background:#4a90e2; color:white; margin-left:auto;}
+  .bot {background:#eee; color:#333; margin-right:auto;}
+  #userInput {width:calc(100% - 90px); padding:10px; border-radius:10px; border:1px solid #ccc;}
+  #sendBtn {padding:10px 20px; border:none; background:#4a90e2; color:white; border-radius:10px; cursor:pointer;}
+  #sendBtn:hover {opacity:0.8;}
+
+  /* ====== TEXT TO IMAGE ====== */
+  #textToImage {margin-top:40px;}
+  #textToImage input, #textToImage button {padding:10px; border-radius:10px; border:1px solid #ccc;}
+  #textToImage button {background:#50e3c2; color:white; border:none; cursor:pointer; margin-left:10px;}
+  #textToImage button:hover {opacity:0.8;}
+  #generatedImage {margin-top:20px; max-width:100%; border-radius:15px; box-shadow:0 4px 15px rgba(0,0,0,0.1);}
+  
+  /* ====== RESPONSIVE ====== */
+  @media(max-width:768px){
+    nav ul {flex-direction:column; gap:10px; margin-top:10px;}
+    header h2 {font-size:2rem;}
+  }
+</style>
 </head>
 <body>
-  <div class="app">
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="flex items-center gap-3 mb-4">
-        <div class="w-12 h-12 rounded-full vivk-gradient flex items-center justify-center text-white font-bold">V</div>
-        <div>
-          <div class="font-bold">Vivk AI</div>
-          <div class="small">نسخة مجانية ذكية — تعمل داخل المتصفح</div>
-        </div>
-      </div><div class="mb-4">
-    <button id="new-convo" class="w-full py-3 rounded-md bg-white/6">محادثة جديدة</button>
-  </div>
 
-  <div class="mb-4">
-    <label class="small mb-2 block">وضع المحاكاة</label>
-    <select id="mode" class="w-full p-2 rounded-md bg-white/5">
-      <option value="assistant">مساعد ذكي (افتراضي)</option>
-      <option value="creative">مبدع (كتابة، إعلانات)</option>
-      <option value="code">مطور (شروح وكود)</option>
-    </select>
-  </div>
+<!-- NAVBAR -->
+<nav>
+  <h1>موقعي الذكي</h1>
+  <ul>
+    <li><a href="#home">الرئيسية</a></li>
+    <li><a href="#about">حول</a></li>
+    <li><a href="#chat">دردشة AI</a></li>
+    <li><a href="#textToImage">تحويل النص إلى صورة</a></li>
+    <li><a href="#contact">تواصل</a></li>
+  </ul>
+</nav>
 
-  <div class="mb-4">
-    <label class="small mb-2 block">اللغة</label>
-    <div class="flex gap-2">
-      <button data-lang="ar" class="lang-btn badge">AR</button>
-      <button data-lang="en" class="lang-btn bg-white/6 px-3 rounded-md">EN</button>
-      <button data-lang="es" class="lang-btn bg-white/6 px-3 rounded-md">ES</button>
+<!-- HEADER -->
+<header id="home">
+  <h2>مرحبا بك في موقعي الذكي</h2>
+  <p>تجربة موقع متكامل مع ذكاء اصطناعي وتحويل النصوص إلى صور بدقة وسلاسة</p>
+</header>
+
+<!-- ABOUT -->
+<section id="about">
+  <h3>حول الموقع</h3>
+  <p>هذا الموقع مصمم ليكون تجربة AI متكاملة، مع واجهة سلسة وجميلة، ودعم للغات متعددة، ووظائف قوية لتجربة الذكاء الاصطناعي مباشرة.</p>
+</section>
+
+<!-- CHATBOT -->
+<section id="chat">
+  <h3>دردشة AI</h3>
+  <div id="chatContainer">
+    <div id="messages"></div>
+    <div style="display:flex; gap:10px;">
+      <input type="text" id="userInput" placeholder="اكتب رسالتك هنا...">
+      <button id="sendBtn">إرسال</button>
     </div>
   </div>
+</section>
 
-  <div class="mb-4">
-    <label class="small mb-2 block">الذاكرة</label>
-    <div class="flex items-center gap-2"><input id="save-memory" type="checkbox" checked> <span class="small">حفظ المحادثات محلياً</span></div>
+<!-- TEXT TO IMAGE -->
+<section id="textToImage">
+  <h3>تحويل النص إلى صورة</h3>
+  <div>
+    <input type="text" id="imageText" placeholder="اكتب نص لتحويله إلى صورة">
+    <button id="generateBtn">تحويل</button>
   </div>
+  <img id="generatedImage" src="" alt="">
+</section>
 
-  <div class="mt-6 small text-gray-300">خيارات إضافية</div>
-  <div class="flex flex-col gap-2 mt-2">
-    <button id="export-chat" class="w-full py-2 rounded-md bg-white/6 text-sm">تصدير المحادثة</button>
-    <button id="import-chat" class="w-full py-2 rounded-md bg-white/6 text-sm">استيراد محادثة</button>
-    <button id="tts-toggle" class="w-full py-2 rounded-md bg-white/6 text-sm">تشغيل الصوت (TTS)</button>
-  </div>
+<!-- CONTACT -->
+<section id="contact">
+  <h3>تواصل معنا</h3>
+  <p>يمكنك التواصل معنا عبر البريد الإلكتروني: info@smartsite.com</p>
+</section>
 
-  <div class="mt-6 small text-gray-400">ملاحظة: هذه النسخة تعمل بالكامل داخل المتصفح ومجانية. لتحسين القوة يمكنك لاحقاً إضافة API لموديل خارجي.</div>
-</aside>
+<!-- JS -->
+<script>
+  // ===== CHATBOT SIMULATION =====
+  const messagesDiv = document.getElementById('messages');
+  const userInput = document.getElementById('userInput');
+  const sendBtn = document.getElementById('sendBtn');
 
-<!-- MAIN -->
-<main class="main">
-  <div class="hero vivk-gradient p-4">
-    <div>
-      <div class="text-lg font-bold">مرحباً بك في Vivk AI — التجربة المجانية</div>
-      <div class="small">ذكاء اصطناعي مُحاكي، ذاكرة محلية، اقتراحات ذكية، وتحويل كلام إلى نص والعكس</div>
-    </div>
-    <div class="text-right">
-      <div class="small">قوة المحاكاة</div>
-      <div class="badge">مجاناً</div>
-    </div>
-  </div>
+  sendBtn.addEventListener('click', () => {
+    const text = userInput.value.trim();
+    if(text === '') return;
+    appendMessage(text, 'user');
+    userInput.value = '';
+    
+    // Simulated AI response
+    setTimeout(() => {
+      let botReply = "هذه إجابة تجريبية للرسالة: " + text;
+      appendMessage(botReply, 'bot');
+    }, 800);
+  });
 
-  <div class="chat-window" id="chat-window" aria-live="polite">
-    <!-- رسائل تظهر هنا -->
-  </div>
+  function appendMessage(text, type){
+    const div = document.createElement('div');
+    div.classList.add('msg', type);
+    div.textContent = text;
+    messagesDiv.appendChild(div);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
 
-  <div class="p-2 rounded-md" style="background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);">
-    <div class="controls">
-      <div class="flex-1 suggestions relative">
-        <input id="user-input" class="w-full p-3 rounded-md bg-transparent border border-white/6 outline-none" placeholder="اكتب سؤالك أو اطلب مساعدة..." autocomplete="off">
-        <div id="sug-list" class="sug-list hidden"></div>
-      </div>
-      <div class="flex items-center gap-2">
-        <button id="mic" title="التحدث بالصوت" class="p-3 rounded-md bg-white/6"><i class="fas fa-microphone"></i></button>
-        <button id="send" class="p-3 vivk-gradient rounded-md"><i class="fas fa-paper-plane"></i></button>
-      </div>
-    </div>
-  </div>
+  // ===== TEXT TO IMAGE SIMULATION =====
+  const generateBtn = document.getElementById('generateBtn');
+  const imageText = document.getElementById('imageText');
+  const generatedImage = document.getElementById('generatedImage');
 
-  <div class="small text-gray-400">نظام محاكاة ذكي: لا يحتاج لمفتاح API. لنتائج أقوى يمكن ربط API خارجي لاحقاً.</div>
-</main>
+  generateBtn.addEventListener('click', () => {
+    const text = imageText.value.trim();
+    if(text === '') return;
+    
+    // Simulate image generation with placeholder
+    const url = `https://via.placeholder.com/600x400.png?text=${encodeURIComponent(text)}`;
+    generatedImage.src = url;
+  });
+</script>
 
-  </div>  <script>
-    /***** بيانات المعرفة المضمنة (توسعها كما تريد) *****/
-    const KB = [
-      {q: 'من هو vivk', a: 'Vivk هو اسم المنصة — منصة ذكاء اصطناعي صممت لتجربة تفاعلية داخل المتصفح.'},
-      {q: 'كيف استخدم الموقع', a: 'اكتب سؤالك في صندوق المحادثة واضغط إرسال أو Enter. يمكنك أيضاً استخدام الصوت.'},
-      {q: 'ما هي ميزاتك', a: 'الردود الذكية، حفظ المحادثة محلياً، اقتراحات فورية، تحويل كلام إلى نص ونطق الردود.'},
-      {q: 'حول', a: 'Vivk AI — نسخة مجانية تعمل داخل المتصفح، مصممة لتمنح تجربة شبيهة بالمساعدات الكبيرة دون دفع.'}
-    ];
-
-    /***** أدوات ذكاء بسيطة (مطابقة شبه دلالية) *****/
-    function normalize(t){return t.replace(/[\W_]+/g,' ').trim().toLowerCase()}
-    function scoreMatch(a,b){
-      a = normalize(a); b = normalize(b);
-      const A = new Set(a.split(' '));
-      const B = new Set(b.split(' '));
-      let inter = 0; A.forEach(x=>{ if(B.has(x)) inter++});
-      // طول المشابهة + نسبة التقاطع
-      return inter / Math.max(1, Math.min(A.size,B.size));
-    }
-
-    /***** إدارة المحادثة والذاكرة المحلية *****/
-    const chatWindow = document.getElementById('chat-window');
-    const input = document.getElementById('user-input');
-    const sendBtn = document.getElementById('send');
-    const sugList = document.getElementById('sug-list');
-
-    let convo = JSON.parse(localStorage.getItem('vivk_convo')||'[]');
-    const SAVE = document.getElementById('save-memory');
-
-    function renderConvo(){
-      chatWindow.innerHTML = '';
-      convo.forEach(m=>{
-        const div = document.createElement('div');
-        div.className = 'bubble ' + (m.role==='user'?'user':'ai');
-        div.innerHTML = `<div class="small text-gray-300">${m.role==='user'? 'أنت' : 'Vivk'}</div><div>${m.text}</div>`;
-        chatWindow.appendChild(div);
-      });
-      chatWindow.scrollTop = chatWindow.scrollHeight;
-    }
-
-    function saveConvo(){ if(SAVE.checked) localStorage.setItem('vivk_convo', JSON.stringify(convo)); }
-
-    function pushMessage(role,text){ convo.push({role,text}); renderConvo(); saveConvo(); }
-
-    function generateResponse(userText, mode='assistant'){
-      // 1) تحقق من قاعدة المعرفة
-      let best = {s:0, a: null};
-      for(const item of KB){ const s = scoreMatch(userText, item.q); if(s>best.s){ best = {s,a:item.a}; }}
-      if(best.s>0.4) return best.a;
-
-      // 2) تحقق من نماذج جاهزة
-      const lc = userText.toLowerCase();
-      if(/(مرحبا|السلام|اهلا|اهلين)/.test(lc)) return random(['مرحباً! كيف أستطيع مساعدتك؟','أهلاً! تفضل بسؤالك']);
-      if(/(شكرا|شكراً)/.test(lc)) return 'على الرحب والسعة! هل تحتاج شيء آخر؟';
-      if(/(كود|برمج|سطر|javascript|python)/.test(lc) && mode==='code') return 'تفضل: أي لغة؟ اعطني وصف ما تريده وسأطلعك على مثال عملي.';
-
-      // 3) بناء رد "ذكي" صنعي — جمع جمل مفيدة
-      const starters = ['هذا سؤال رائع،', 'دعني أشرح لك:','فكرة جيدة —','توضيح سريع:'];
-      const bodies = [
-        'يمكننا تقسيم المشكلة إلى خطوات بسيطة.',
-        'أقترح أن تبدأ بتجربة صغيرة ثم توسعها لاحقاً.',
-        'سأعطيك مثالاً عملياً إن أردت.'
-      ];
-      return random(starters) + ' ' + random(bodies) + ' هل تريد أمثلة أو شرح مفصل؟';
-    }
-
-    function random(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-
-    // إرسال رسالة المستخدم
-    async function send(){
-      const text = input.value.trim(); if(!text) return;
-      pushMessage('user', text);
-      input.value = '';
-      showTyping();
-
-      // استدعاء "الموديل" المحلي (محاكاة سريعة)
-      const mode = document.getElementById('mode').value;
-      await wait(700 + Math.random()*600);
-      const resp = generateResponse(text, mode);
-      hideTyping();
-      pushMessage('ai', resp);
-    }
-
-    // مؤشرات الكتابة
-    let typingEl = null;
-    function showTyping(){ typingEl = document.createElement('div'); typingEl.className='bubble ai small'; typingEl.innerHTML = '<div class="small text-gray-300">Vivk</div><div class="typing-animation"><span></span><span></span><span></span></div>'; chatWindow.appendChild(typingEl); chatWindow.scrollTop = chatWindow.scrollHeight; }
-    function hideTyping(){ if(typingEl) chatWindow.removeChild(typingEl); typingEl = null; }
-
-    function wait(ms){ return new Promise(r=>setTimeout(r,ms)); }
-
-    // اقتراحات أثناء الكتابة (نموذجي)
-    input.addEventListener('input', ()=>{
-      const v = input.value.trim(); if(!v){sugList.classList.add('hidden'); return}
-      const suggestions = [v + ' كيف أبدأ؟', 'اعمل لي ملخصاً عن: ' + v, 'اكتب لي كود بلغة JavaScript ي' + v];
-      sugList.innerHTML = suggestions.map(s=>`<div class="sug-item">${s}</div>`).join(''); sugList.classList.remove('hidden');
-      document.querySelectorAll('.sug-item').forEach(el=>el.addEventListener('click', ()=>{ input.value = el.innerText; sugList.classList.add('hidden'); input.focus(); }));
-    });
-
-    // ازرار
-    sendBtn.addEventListener('click', send);
-    input.addEventListener('keypress', (e)=>{ if(e.key==='Enter') send(); });
-
-    document.getElementById('new-convo').addEventListener('click', ()=>{ convo=[]; saveConvo(); renderConvo(); pushMessage('ai','تم فتح محادثة جديدة — كيف يمكنني مساعدتك؟'); });
-
-    // TTS / STT (استعمال Web Speech API)
-    let recognition = null; let ttsEnabled = false;
-    if('speechSynthesis' in window){ document.getElementById('tts-toggle').addEventListener('click', ()=>{ ttsEnabled = !ttsEnabled; alert('النطق ' + (ttsEnabled? 'مفعّل' : 'تم تعطيله')); }); }
-    if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window){
-      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognition = new SR(); recognition.lang='ar-SA'; recognition.interimResults=false;
-      document.getElementById('mic').addEventListener('click', ()=>{
-        if(!recognition) return alert('التعرّف الصوتي غير مدعوم في متصفحك');
-        recognition.start();
-      });
-      recognition.onresult = (e)=>{ input.value = e.results[0][0].transcript; }
-    } else {
-      document.getElementById('mic').addEventListener('click', ()=>alert('الميكروفون/التعرّف الصوتي غير مدعوم في متصفحك'))
-    }
-
-    // عند استلام رد، نطبع صوتياً إن كان مفعلاً
-    const originalPush = pushMessage;
-    window.pushMessage = function(role,text){ originalPush(role,text); if(role==='ai' && ttsEnabled){ const u = new SpeechSynthesisUtterance(text); u.lang='ar-SA'; speechSynthesis.speak(u); } }
-
-    // تحسينات الذكاء: إضافة ملقات (قواعد) سريعة
-    // مثال: لو سأل المستخدم عن "خطوات" نجعل الرد خطوة بخطوة
-    const oldGenerate = generateResponse;
-    generateResponse = function(userText, mode){
-      if(/خطوات|كيف أعمل|كيفية/.test(userText)){
-        return 'خطوات مقترحة:\n1) حدد المتطلبات\n2) ابدأ بنموذج بسيط\n3) اختبر وحسّن\n4) وزّع الحل';
-      }
-      return oldGenerate(userText, mode);
-    }
-
-    // التحميل من الذاكرة
-    renderConvo(); if(convo.length===0) pushMessage('ai','مرحباً! أنا Vivk AI — كيف أساعدك اليوم؟');
-
-    // تصدير واستيراد
-    document.getElementById('export-chat').addEventListener('click', ()=>{
-      const blob = new Blob([JSON.stringify(convo,null,2)],{type:'application/json'});
-      const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href=url; a.download='vivk-convo.json'; a.click(); URL.revokeObjectURL(url);
-    });
-    document.getElementById('import-chat').addEventListener('click', ()=>{
-      const inp = document.createElement('input'); inp.type='file'; inp.accept='.json'; inp.onchange = e=>{
-        const f = e.target.files[0]; if(!f) return; const reader=new FileReader(); reader.onload = ev=>{ try{ convo = JSON.parse(ev.target.result); saveConvo(); renderConvo(); }catch(err){ alert('ملف غير صالح'); }}; reader.readAsText(f);
-      }; inp.click();
-    });
-
-    // زر TTS يقوم بتشغيل آخر رد آلي
-    document.getElementById('tts-toggle').addEventListener('click', ()=>{
-      if(!('speechSynthesis' in window)) return alert('TTS غير مدعوم');
-      const lastAI = [...convo].reverse().find(m=>m.role==='ai'); if(!lastAI) return alert('لا يوجد رد للنطق'); const u = new SpeechSynthesisUtterance(lastAI.text); u.lang='ar-SA'; speechSynthesis.speak(u);
-    });
-
-    // ملاحظة: يمكنك لاحقاً ربط هذا الواجهة بموديل خارجي (Hugging Face, OpenAI) عن طريق إضافة استدعاء fetch في generateResponse
-  </script></body>
+</body>
 </html>
